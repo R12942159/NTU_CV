@@ -1,26 +1,2 @@
 .DS_Store
 
-testdata/2_2.0threshold_kpts.png
-testdata/2_5.0threshold_kpts.png
-testdata/2_7.0threshold_kpts.png
-testdata/DoG1-1.png
-testdata/DoG1-2.png
-testdata/DoG1-3.png
-testdata/DoG1-4.png
-testdata/DoG2-1.png
-testdata/DoG2-2.png
-testdata/DoG2-3.png
-testdata/DoG2-4.png
-
-# 忽略 Jupyter Notebook 檔案
-practice.ipynb
-
-# 忽略臨時報告檔案
-../report_hw1_temp.docx
-
-# 忽略 requirements.txt
-../requirements.txt
-
-# 忽略臨時檔案
-../~$port_hw1_temp.docx
-
