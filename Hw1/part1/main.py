@@ -20,6 +20,15 @@ def main():
     img = cv2.imread(args.image_path, 0).astype(np.float32)
 
     ### TODO ###
+    # create DoG class
+    DoG = Difference_of_Gaussian(args.threshold)
+    
+    # find keypoint from DoG and sort it
+    keypoints = DoG.get_keypoints(img)
+
+    # 將偵測到的關鍵點繪製在影像上並存檔
+    output_path = args.image_path.replace('.png', f'_{args.threshold}threshold_kpts.png')
+    plot_keypoints(img, keypoints, output_path)
 
 
 if __name__ == '__main__':
