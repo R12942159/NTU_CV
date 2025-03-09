@@ -40,6 +40,7 @@ class Difference_of_Gaussian(object):
 
         # Step 3: Thresholding the value and Find local extremum (local maximun and local minimum)
         #         Keep local extremum as a keypoint
+        # method_1 (slower)
         keypoints = []
         for i in range(self.num_octaves):
             # transform an octave into a 3-dimensional array
@@ -55,6 +56,18 @@ class Difference_of_Gaussian(object):
                         # to check if it's local extremum
                         if (np.absolute(pixel) > self.threshold) and ((pixel >= cube).all() or (pixel <= cube).all()):
                             keypoints.append([y*2, x*2] if i else [y, x])
+        
+        # method_2 (faster)
+        keypoints = np.array([],dtype='int64').reshape((0,2))
+        for i in range(self.num_octaves):
+            dogs = np.array(dog_images[i])
+            cube = np.array([np.roll(dogs,(x,y,z),axis=(2,1,0)) for z in range(-1,2) for y in range(-1,2) for x in range(-1,2)])
+            mask = (np.absolute(dogs)>=self.threshold)&((np.min(cube,axis=0)==dogs)|(np.max(cube,axis=0)==dogs))
+            for j in range(1, self.num_DoG_images_per_octave-1):
+                m = mask[j]
+                x, y = np.meshgrid(np.arange(m.shape[1]),np.arange(m.shape[0]))
+                kp = np.stack([y[m],x[m]]).T*2 if i else np.stack([y[m],x[m]]).T
+                keypoints = np.concatenate([keypoints,kp])
 
         # Step 4: Delete duplicate keypoints
         # - Function: np.unique
