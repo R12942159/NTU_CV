@@ -41,21 +41,21 @@ class Difference_of_Gaussian(object):
         # Step 3: Thresholding the value and Find local extremum (local maximun and local minimum)
         #         Keep local extremum as a keypoint
         # method_1 (slower)
-        keypoints = []
-        for i in range(self.num_octaves):
-            # transform an octave into a 3-dimensional array
-            dogs = np.array(dog_images[i])
-            height, width = dogs[i].shape
-            # examine every 3*3 cube for local extremum
-            # iterate through DoG image number 1 and 2 (other than 0 and 3)
-            for z in range(1, self.num_DoG_images_per_octave-1):
-                for y in range(1, height-2):
-                    for x in range(1, width-2):
-                        pixel = dogs[z, y, x]
-                        cube = dogs[z-1:z+2, y-1:y+2, x-1:x+2]
-                        # to check if it's local extremum
-                        if (np.absolute(pixel) > self.threshold) and ((pixel >= cube).all() or (pixel <= cube).all()):
-                            keypoints.append([y*2, x*2] if i else [y, x])
+        # keypoints = []
+        # for i in range(self.num_octaves):
+        #     # transform an octave into a 3-dimensional array
+        #     dogs = np.array(dog_images[i])
+        #     height, width = dogs[i].shape
+        #     # examine every 3*3 cube for local extremum
+        #     # iterate through DoG image number 1 and 2 (other than 0 and 3)
+        #     for z in range(1, self.num_DoG_images_per_octave-1):
+        #         for y in range(1, height-2):
+        #             for x in range(1, width-2):
+        #                 pixel = dogs[z, y, x]
+        #                 cube = dogs[z-1:z+2, y-1:y+2, x-1:x+2]
+        #                 # to check if it's local extremum
+        #                 if (np.absolute(pixel) > self.threshold) and ((pixel >= cube).all() or (pixel <= cube).all()):
+        #                     keypoints.append([y*2, x*2] if i else [y, x])
         
         # method_2 (faster)
         keypoints = np.array([],dtype='int64').reshape((0,2))
