@@ -20,7 +20,7 @@ class Joint_bilateral_filter(object):
             for j in range(self.wndw_size):
                 GaussianSpatial[i, j] = np.exp(np.divide(np.square(i - self.pad_w) + np.square(j - self.pad_w), -2 * np.square(self.sigma_s)))
         
-        # Spatial kernel (fast)
+        # Spatial kernel (fast?)
         # x, y = np.meshgrid(np.arange(self.wndw_size) - self.pad_w, np.arange(self.wndw_size) - self.pad_w, indexing='ij')
         # GaussianSpatial = np.exp(-(x**2 + y**2) / (2 * self.sigma_s**2))
         
