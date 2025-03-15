@@ -17,10 +17,3 @@
 - **Advanced Color-to-Gray Conversion**  
   
 - **Implement Bilateral Filter**  
-
----
-
-## Requirements
-- Python 3.8.20
-- opencv-python==4.6.0.66
-- numpy==1.21.6
