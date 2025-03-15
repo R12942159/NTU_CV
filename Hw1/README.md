@@ -24,3 +24,9 @@
 
 - **To run Part 2, use the following command:**
     python eval.py
+
+---
+## Submission
+• Please submit those two files, i.e. your StudentID.zip and report.pdf,
+separately to NTU COOL
+• Deadline: 2025/03/27 (Thu.) 23:59
