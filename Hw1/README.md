@@ -12,6 +12,10 @@
   Implement a bilateral filter to reduce image noise while preserving edges. This filter is based on both spatial distance and pixel intensity similarity, making it effective for edge-preserving smoothing.
 
 ---
+## Install the required dependencies:
+pip install -r requirements.txt
+
+---
 ## Usage
 - **To run Part 1, use the following command:**
     python eval.py
