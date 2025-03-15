@@ -16,3 +16,5 @@
 - #### Part 2: Image Filtering
   - **Advanced Color-to-Gray Conversion**
   - **Implement Bilateral Filter**
+
+### HW2: XXX
