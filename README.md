@@ -1,7 +1,7 @@
-# Computer Vision: From Recognition to Geometry
+# Computer Vision
 
 ## Course Information
-- **Course**: Computer Vision
+- **Course**: Computer Vision: From Recognition to Geometry
 - **Instructor**: Shao-Yi Chien
 - **Department**: Department of Electrical Engineering, NTU
 - **Term**: Spring 2025
