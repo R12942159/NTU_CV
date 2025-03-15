@@ -16,6 +16,7 @@
 - Python 3.8.20
 - opencv-python==4.6.0.66
 - numpy==1.21.6
+- matplotlib==3.7.5
 
 ---
 ## Usage
