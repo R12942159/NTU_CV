@@ -17,4 +17,7 @@
   - **Advanced Color-to-Gray Conversion**
   - **Implement Bilateral Filter**
 
-### HW2: XXX
+### HW2: Recognition/Classification
+
+- #### Part 1: Bag-of-Words Scene Recognition
+- #### Part 2: CNN Image Classification
