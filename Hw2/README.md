@@ -39,6 +39,6 @@
 
 ---
 ## Submission
-- Please submit those two files, i.e. your StudentID.zip and report.pdf,
-separately to NTU COOL
-- Deadline: 2025/03/27 (Thu.) 23:59
+- Submit report.pdf & StudentID_hw2.zip (e.g. R01234567_hw2.zip) to NTU
+COOL.
+- Deadline: 2025/04/11 (Thu.) 23:59
