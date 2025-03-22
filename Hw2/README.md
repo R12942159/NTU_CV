@@ -17,17 +17,17 @@
 
 ---
 ## Requirements
-- Python 3.8
-- torch==2.2.1
-- torchvision==0.17.1
-- torchaudio==2.2.1
-- matplotlib==3.7.5
-- numpy==1.24.0
-- Pillow==10.4.0
-- scikit-learn==1.3.2
-- scipy==1.8.1
-- tqdm==4.67.1
-- gdown==5.2.0
+- Python 3.6.13
+- torch==1.10.1
+- torchaudio==0.10.1
+- torchvision==0.11.2
+- matplotlib==3.3.4
+- numpy==1.19.5
+- Pillow==8.4.0
+- scikit-learn==0.24.2
+- scipy==1.5.4
+- tqdm==4.64.1
+- gdown==4.6.4
 
 ---
 ## Usage
