@@ -5,7 +5,10 @@
 # Description: Utility functions to process BoW features and KNN classifier.
 # ============================================================================
 
+import gc
+import cv2
 import numpy as np
+
 from PIL import Image
 from tqdm import tqdm
 from cyvlfeat.sift.dsift import dsift
@@ -50,10 +53,26 @@ def get_tiny_images(img_paths: str):
 
     tiny_img_feats = []
 
+    for path in img_paths:
+        img = cv2.imread(path)
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        tiny_2D = cv2.resize(img, (16, 16), interpolation=cv2.INTER_AREA)
+        tiny_1D = tiny_2D.flatten().astype(np.float32)
+
+        mean = np.mean(tiny_1D)
+        tiny_1D -= mean
+
+        norm = np.linalg.norm(tiny_1D)
+        tiny_1D /= (norm + 1e-8)
+
+        tiny_img_feats.append(tiny_1D)
+        
+    tiny_img_feats = np.matrix(tiny_img_feats)
+
     #################################################################
     #                        END OF YOUR CODE                       #
     #################################################################
-
+    
     return tiny_img_feats
 
 #########################################
@@ -64,7 +83,8 @@ def get_tiny_images(img_paths: str):
 ###### Step 1-b-1
 def build_vocabulary(
         img_paths: list, 
-        vocab_size: int = 400
+        vocab_size: int = 400,
+        dsift_step: int = 3,
     ):
     '''
     Args:
@@ -109,7 +129,14 @@ def build_vocabulary(
     # You are welcome to use your own SIFT feature                                   #
     ##################################################################################
 
-
+    features = []
+    for path in img_paths:
+        img = Image.open(path)
+        img = np.asarray(img)
+        _, descriptors = dsift(img, step=[dsift_step, dsift_step], fast=True)
+        features.append(descriptors)
+    features = np.concatenate(features, axis=0).astype('float32')
+    vocab = kmeans(features, num_centers=vocab_size, initialization="PLUSPLUS")
 
     ##################################################################################
     #                                END OF YOUR CODE                                #
@@ -120,7 +147,8 @@ def build_vocabulary(
 ###### Step 1-b-2
 def get_bags_of_sifts(
         img_paths: list,
-        vocab: np.array
+        vocab: np.array,
+        dsift_step: int = 3,      
     ):
     '''
     Args:
@@ -157,6 +185,16 @@ def get_bags_of_sifts(
     ############################################################################
 
     img_feats = []
+    for path in img_paths:
+        img = Image.open(path)
+        img = np.asarray(img)
+        _, descriptors = dsift(img, step=[dsift_step, dsift_step], fast=True)
+        dist = cdist(vocab, descriptors, metric='cityblock')
+        idx = np.argmin(dist, axis=0)
+        hist, _ = np.histogram(idx, bins=len(vocab))
+        hist_norm = [float(h)/sum(hist) for h in hist]
+        img_feats.append(hist_norm)
+    img_feats = np.asarray(img_feats)
 
     ############################################################################
     #                                END OF YOUR CODE                          #
@@ -213,7 +251,20 @@ def nearest_neighbor_classify(
     #      work better, or you can also try different metrics for cdist()     #
     ###########################################################################
 
+    k, p = 9, 0.19
+    dist = cdist(test_img_feats, train_img_feats, metric='minkowski', p=p)
+
+    # For each testing feature, select its k-nearest training features
+    k_nearest = np.argpartition(dist, k, axis=1)[:, :k]
+
+    # Vote for the final id based on k nearest training features' label id
     test_predicts = []
+    for row in k_nearest:
+        labels = np.array(train_labels)[row]
+        label_idx = np.array([CAT2ID[label] for label in labels])
+        final_id = np.bincount(label_idx).argmax()
+        final_label = CAT[final_id]
+        test_predicts.append(final_label)
 
     ###########################################################################
     #                               END OF YOUR CODE                          #

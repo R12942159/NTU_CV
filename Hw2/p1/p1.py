@@ -60,7 +60,11 @@ def main():
         if os.path.isfile('vocab.pkl') is False:
             print('No existing visual word vocabulary found. Computing one from training images')
             vocab_size = 400  # vocab_size is up to you, larger values will work better (to a point) but be slower to compute
-            vocab = build_vocabulary(train_img_paths, vocab_size)
+            vocab = build_vocabulary(
+                train_img_paths, 
+                vocab_size, 
+                dsift_step = 3,
+            )
             with open('vocab.pkl', 'wb') as f:
                 pickle.dump(vocab, f, protocol=pickle.HIGHEST_PROTOCOL)
         else:
@@ -68,7 +72,11 @@ def main():
                 vocab = pickle.load(f)
         # train_image_feats
         if os.path.isfile('train_image_feats.pkl') is False:
-            train_img_feats = get_bags_of_sifts(train_img_paths, vocab)
+            train_img_feats = get_bags_of_sifts(
+                train_img_paths, 
+                vocab, 
+                dsift_step = 3,
+            )
             with open('train_image_feats.pkl', 'wb') as f:
                 pickle.dump(train_img_feats, f, protocol=pickle.HIGHEST_PROTOCOL)
         else:
@@ -76,7 +84,11 @@ def main():
                 train_img_feats = pickle.load(f)
         # test_image_feats
         if os.path.isfile('test_image_feats.pkl') is False:
-            test_img_feats  = get_bags_of_sifts(test_img_paths, vocab)
+            test_img_feats  = get_bags_of_sifts(
+                test_img_paths, 
+                vocab, 
+                dsift_step = 3,
+            )
             with open('test_image_feats.pkl', 'wb') as f:
                 pickle.dump(test_img_feats, f, protocol=pickle.HIGHEST_PROTOCOL)
         else:
