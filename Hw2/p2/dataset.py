@@ -37,7 +37,7 @@ def get_dataloader(
             transforms.RandomHorizontalFlip(p=0.1),  # 10% chance to flip horizontally
             transforms.RandomVerticalFlip(p=0.1),    # 10% chance to flip vertically
             transforms.RandomRotation(degrees=15),   # Rotate randomly within ±15 degrees
-            transforms.RandomResizedCrop(32, padding=4), # Used in small image datasets. Randomly crop a 32x32 region after padding.       
+            transforms.RandomCrop(32, padding=4), # Used in small image datasets. Randomly crop a 32x32 region after padding.       
             ##### TODO: Data Augmentation End #####
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.485, 0.456, 0.406],
