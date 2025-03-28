@@ -10,7 +10,7 @@ import torch.nn as nn
 import torchvision.models as models
 
 class MyNet(nn.Module): 
-    def __init__(self):
+    def __init__(self, kernel_size=3):
         super(MyNet, self).__init__()
         
         ################################################################
@@ -19,7 +19,40 @@ class MyNet(nn.Module):
         # input channel is 3, and the output dimension is 10 (class).  #
         ################################################################
 
-        pass
+        self.feature_extractor = nn.Sequential(
+            nn.Conv2d(in_channels=3, out_channels=32, kernel_size=kernel_size, padding='same'),
+            nn.BatchNorm2d(num_features=32),
+            nn.ReLU(),
+            nn.Conv2d(32, 32, kernel_size, padding='same'),
+            nn.BatchNorm2d(num_features=32),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2), # img_size/2
+
+            nn.Conv2d(32, 64, kernel_size, padding='same'),
+            nn.BatchNorm2d(64),
+            nn.ReLU(),
+            nn.Conv2d(64, 64, kernel_size, padding='same'),
+            nn.BatchNorm2d(64),
+            nn.ReLU(),
+            nn.MaxPool2d(2), # img_size/4
+
+            nn.Conv2d(64, 128, kernel_size, padding='same'),
+            nn.BatchNorm2d(128),
+            nn.ReLU(),
+            nn.Conv2d(128, 128, kernel_size, padding='same'),
+            nn.BatchNorm2d(128),
+            nn.ReLU(),
+            nn.MaxPool2d(2), # img_size/8
+        )
+
+        self.flatten = nn.Flatten() # (128, 4, 4) -> (128*4*4)
+        self.classifier = nn.Sequential(
+            nn.Dropout(0.3),
+            nn.Linear(128*4*4, 256),
+            nn.Dropout(0.3),
+            nn.ReLU(),
+            nn.Linear(256, 10),
+        )
 
     def forward(self, x):
 
@@ -28,7 +61,11 @@ class MyNet(nn.Module):
         # Define the forward path of your model. #
         ##########################################
 
-        pass
+        x = self.feature_extractor(x) # (batch_size, 128, 4, 4)
+        x = self.flatten(x) # feature maps -> feature vectors
+        x = self.classifier(x) # (batch_size, 10)
+
+        return x
     
 class ResNet18(nn.Module):
     def __init__(self):
@@ -39,13 +76,12 @@ class ResNet18(nn.Module):
         # Pretrain weights on ResNet18 is allowed. #
         ############################################
 
-        # (batch_size, 3, 32, 32)
-        # try to load the pretrained weights
-        self.resnet = models.resnet18(weights=None)  # Python3.8 w/ torch 2.2.1
-        # self.resnet = models.resnet18(pretrained=False)  # Python3.6 w/ torch 1.10.1
-        # (batch_size, 512)
-        self.resnet.fc = nn.Linear(self.resnet.fc.in_features, 10)
-        # (batch_size, 10)
+        self.resnet = models.resnet18(pretrained=True) # (batch_size, 3, 32, 32)
+        self.resnet.conv1 = nn.Conv2d(
+            3, 64, kernel_size=3, stride=1, padding=1, bias=False)
+    
+        self.resnet.maxpool = nn.Identity() # remove the first maxpool layer
+        self.resnet.fc = nn.Linear(self.resnet.fc.in_features, 10) # (batch_size, 10)
 
         #######################################################################
         # TODO (optional):                                                     #

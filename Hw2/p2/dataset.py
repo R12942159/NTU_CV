@@ -34,7 +34,10 @@ def get_dataloader(
         transform = transforms.Compose([
             transforms.Resize((32,32)),
             ##### TODO: Data Augmentation Begin #####
-            
+            transforms.RandomHorizontalFlip(p=0.1),  # 10% chance to flip horizontally
+            transforms.RandomVerticalFlip(p=0.1),    # 10% chance to flip vertically
+            transforms.RandomRotation(degrees=15),   # Rotate randomly within ±15 degrees
+            transforms.RandomResizedCrop(32, padding=4), # Used in small image datasets. Randomly crop a 32x32 region after padding.       
             ##### TODO: Data Augmentation End #####
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.485, 0.456, 0.406],
@@ -98,9 +101,13 @@ class CIFAR10Dataset(Dataset):
 
         ###################### TODO End ########################
 
-        pass
-            
-        # return {
-        #     'images': image, 
-        #     'labels': label
-        # }
+        path = os.path.join(self.dataset_dir, self.image_names[index])
+        image = Image.open(path).convert('RGB')
+        image = self.transform(image)
+
+        if self.split != 'test':
+            label = self.labels[index]
+            return {'images': image, 
+                    'labels': torch.tensor(label, dtype=torch.long)}
+        else:
+            return {'images': image}

@@ -23,7 +23,8 @@ from utils import set_seed, write_config_log, write_result_log
 
 def plot_learning_curve(
         logfile_dir: str,
-        result_lists: list
+        result_lists: list,
+        epoch: int,
     ):
     '''
     Plot and save the learning curves under logfile_dir.
@@ -54,7 +55,46 @@ def plot_learning_curve(
     # is not fixed.                                                #
     ################################################################
     
-    pass
+    train_acc = torch.tensor(result_lists['train_acc'])
+    val_acc = torch.tensor(result_lists['val_acc'])
+    train_loss = torch.tensor(result_lists['train_loss'])
+    val_loss = torch.tensor(result_lists['val_loss'])
+
+    # Plot training accuracy
+    plt.figure()
+    plt.plot(range(epoch), train_acc.cpu())
+    plt.xlabel('Epoch')
+    plt.ylabel('Accuracy')
+    plt.title('Training accuracy')
+    plt.legend(['train'])
+    plt.savefig(os.path.join(logfile_dir, 'train_acc.png'))
+
+    # Plot validation accuracy
+    plt.figure()
+    plt.plot(range(epoch), val_acc.cpu())
+    plt.xlabel('Epoch')
+    plt.ylabel('Accuracy')
+    plt.title('validation accuracy')
+    plt.legend(['val'])
+    plt.savefig(os.path.join(logfile_dir, 'val_acc.png'))
+
+    # Plot training loss
+    plt.figure()
+    plt.plot(range(epoch), train_loss.cpu())
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.title('Training loss')
+    plt.legend(['train'])
+    plt.savefig(os.path.join(logfile_dir, 'train_loss.png'))
+
+    # Plot training and validation loss
+    plt.figure()
+    plt.plot(range(epoch), val_loss.cpu())
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.title('validation loss')
+    plt.legend(['val'])
+    plt.savefig(os.path.join(logfile_dir, 'val_loss.png'))
 
 def train(
         model: nn.Module,
@@ -134,6 +174,17 @@ def train(
             # accuracy and loss.                                        #
             #############################################################
 
+            for batch, data in enumerate(val_loader):
+                sys.stdout.write(
+                    f'\r[{epoch + 1}/{cfg.epochs}] Val batch: {batch + 1} / {len(val_loader)}')
+                sys.stdout.flush()
+                # Data loading.
+                images, labels = data['images'].to(device), data['labels'].to(device)  # (batch_size, 3, 32, 32), (batch_size)
+                pred = model(images) # input: (batch_size, 3, 32, 32) -> output: (batch_size, 10)
+                loss = criterion(pred, labels)
+                # Evaluate.
+                val_correct += torch.sum(torch.argmax(pred, dim=1) == labels)
+                val_loss += loss.item()
             ######################### TODO End ##########################
 
         # Print validation result
@@ -172,7 +223,7 @@ def train(
             'val_acc': val_acc_list,
             'val_loss': val_loss_list
         }
-        plot_learning_curve(logfile_dir, current_result_lists)
+        plot_learning_curve(logfile_dir, current_result_lists, epoch)
 
 def main():
 
