@@ -16,18 +16,11 @@
     - **You may have to modify the structure to pass the strong baseline.**
 
 ---
-## Requirements
-- Python 3.6.13
-- torch==1.10.1
-- torchaudio==0.10.1
-- torchvision==0.11.2
-- matplotlib==3.3.4
-- numpy==1.19.5
-- Pillow==8.4.0
-- scikit-learn==0.24.2
-- scipy==1.5.4
-- tqdm==4.64.1
-- gdown==4.6.4
+## Environment Setup (conda is strongly suggested)
+conda create -n CV_Hw2_env python==3.8.20
+conda activate CV_Hw2_env
+conda install -c conda-forge cyvlfeat
+pip install -r requirements.txt
 
 ---
 ## Usage
