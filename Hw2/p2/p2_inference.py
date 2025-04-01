@@ -54,6 +54,11 @@ def main():
     else:
         raise NameError('Unknown model type')
     model.to(device)
+    print("===== Model Architecture =====")
+    print(model)
+
+    model_params = sum(p.numel() for p in model.parameters())
+    print(f"\nTotal parameters in MyNet: {model_params:,}")
 
     ##### DATALOADER #####
     ##### TODO: check dataset.py #####
@@ -74,7 +79,13 @@ def main():
         # You don't have to calculate accuracy and loss since you   #
         # don't have labels.                                        #
         #############################################################
-   
+
+        for batch in test_loader:
+            images = batch['images']
+            images = images.to(device)
+            pred = model(images)
+            _, predicted = torch.max(pred, 1)
+            predictions.append(predicted.item())
         ######################### TODO End ##########################
 
     test_time = time.time() - test_start_time

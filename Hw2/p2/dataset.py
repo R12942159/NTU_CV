@@ -34,10 +34,11 @@ def get_dataloader(
         transform = transforms.Compose([
             transforms.Resize((32,32)),
             ##### TODO: Data Augmentation Begin #####
-            transforms.RandomHorizontalFlip(p=0.1),  # 10% chance to flip horizontally
-            transforms.RandomVerticalFlip(p=0.1),    # 10% chance to flip vertically
-            transforms.RandomRotation(degrees=15),   # Rotate randomly within ±15 degrees
-            transforms.RandomCrop(32, padding=4), # Used in small image datasets. Randomly crop a 32x32 region after padding.       
+            transforms.RandomHorizontalFlip(),
+            transforms.RandomVerticalFlip(p=0.3),    # 10% chance to flip vertically
+            transforms.RandomCrop(32, padding=4),
+            transforms.RandomRotation(15),
+            transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),
             ##### TODO: Data Augmentation End #####
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.485, 0.456, 0.406],

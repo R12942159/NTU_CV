@@ -20,38 +20,40 @@ class MyNet(nn.Module):
         ################################################################
 
         self.feature_extractor = nn.Sequential(
-            nn.Conv2d(in_channels=3, out_channels=32, kernel_size=kernel_size, padding='same'),
-            nn.BatchNorm2d(num_features=32),
-            nn.ReLU(),
-            nn.Conv2d(32, 32, kernel_size, padding='same'),
-            nn.BatchNorm2d(num_features=32),
-            nn.ReLU(),
-            nn.MaxPool2d(kernel_size=2), # img_size/2
-
-            nn.Conv2d(32, 64, kernel_size, padding='same'),
+            nn.Conv2d(3, 64, kernel_size=3, padding=1),
             nn.BatchNorm2d(64),
             nn.ReLU(),
-            nn.Conv2d(64, 64, kernel_size, padding='same'),
-            nn.BatchNorm2d(64),
-            nn.ReLU(),
-            nn.MaxPool2d(2), # img_size/4
-
-            nn.Conv2d(64, 128, kernel_size, padding='same'),
+            nn.Conv2d(64, 128, kernel_size=3, padding=1),
             nn.BatchNorm2d(128),
             nn.ReLU(),
-            nn.Conv2d(128, 128, kernel_size, padding='same'),
-            nn.BatchNorm2d(128),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            
+            nn.Conv2d(128, 256, kernel_size=3, padding=1),
+            nn.BatchNorm2d(256),
             nn.ReLU(),
-            nn.MaxPool2d(2), # img_size/8
+            nn.Conv2d(256, 256, kernel_size=3, padding=1),
+            nn.BatchNorm2d(256),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            
+            nn.Conv2d(256, 512, kernel_size=3, padding=1),
+            nn.BatchNorm2d(512),
+            nn.ReLU(),
+            nn.Conv2d(512, 512, kernel_size=3, padding=1),
+            nn.BatchNorm2d(512),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2)
         )
 
-        self.flatten = nn.Flatten() # (128, 4, 4) -> (128*4*4)
+        self.flatten = nn.Flatten() # (512, 4, 4) -> (512*4*4)
         self.classifier = nn.Sequential(
-            nn.Dropout(0.3),
-            nn.Linear(128*4*4, 256),
-            nn.Dropout(0.3),
+            nn.Linear(512 * 4 * 4, 1024),
             nn.ReLU(),
-            nn.Linear(256, 10),
+            nn.Dropout(0.5),
+            nn.Linear(1024, 512),
+            nn.ReLU(),
+            nn.Dropout(0.5),
+            nn.Linear(512, 10)
         )
 
     def forward(self, x):

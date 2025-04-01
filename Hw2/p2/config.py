@@ -12,14 +12,14 @@
 ################################################################
 
 # Experiment Settings
-exp_name = 'default'  # name of experiment
+exp_name = 'Semi_train'  # name of experiment
 
 # Model Options
 model_type = 'resnet18'  # 'mynet' or 'resnet18'
 
 # Learning Options
-epochs = 50                # train how many epochs
-batch_size = 32            # batch size for dataloader 
+epochs = 500                # train how many epochs
+batch_size = 128            # batch size for dataloader 
 use_adam = False           # Adam or SGD optimizer
 lr = 1e-2                  # learning rate
 milestones = [16, 32, 45]  # reduce learning rate at 'milestones' epochs

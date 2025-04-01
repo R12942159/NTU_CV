@@ -54,7 +54,7 @@ def plot_learning_curve(
     # plot being unsaved if early stop, so the result_lists's size #
     # is not fixed.                                                #
     ################################################################
-    
+
     train_acc = torch.tensor(result_lists['train_acc'])
     val_acc = torch.tensor(result_lists['val_acc'])
     train_loss = torch.tensor(result_lists['train_loss'])
@@ -153,7 +153,7 @@ def train(
         train_time = time.time() - train_start_time
         train_acc = train_correct / len(train_loader.dataset)
         train_loss /= len(train_loader)
-        train_acc_list.append(train_acc.cpu().numpy())
+        train_acc_list.append(train_acc)
         train_loss_list.append(train_loss)
         print()
         print(f'[{epoch + 1}/{cfg.epochs}] {train_time:.2f} sec(s) Train Acc: {train_acc:.5f} | Train Loss: {train_loss:.5f}')
@@ -191,7 +191,7 @@ def train(
         val_time = time.time() - val_start_time
         val_acc = val_correct / len(val_loader.dataset)
         val_loss /= len(val_loader)
-        val_acc_list.append(val_acc.cpu().numpy())
+        val_acc_list.append(val_acc)
         val_loss_list.append(val_loss)
         print()
         print(f'[{epoch + 1}/{cfg.epochs}] {val_time:.2f} sec(s) Val Acc: {val_acc:.5f} | Val Loss: {val_loss:.5f}')
@@ -223,7 +223,7 @@ def train(
             'val_acc': val_acc_list,
             'val_loss': val_loss_list
         }
-        plot_learning_curve(logfile_dir, current_result_lists, epoch)
+        plot_learning_curve(logfile_dir, current_result_lists, epoch+1)
 
 def main():
 
@@ -281,9 +281,10 @@ def main():
     else:
         optimizer = torch.optim.SGD(model.parameters(), lr=cfg.lr,
                                     momentum=0.9, weight_decay=1e-6)
-    scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer,
-                                                     milestones=cfg.milestones,
-                                                     gamma=0.1)
+    # scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer,
+    #                                                  milestones=cfg.milestones,
+    #                                                  gamma=0.1)
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=100)
     
     ##### TRAINING & VALIDATION #####
     ##### TODO: check train() in this file #####
