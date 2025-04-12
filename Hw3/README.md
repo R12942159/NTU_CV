@@ -4,6 +4,9 @@
 - **Familiar DLT estimation method**
 - **Practice forward warping**
 
+## Part 2: Marker-Based Planar AR
+## Part 3: Unwarp the Secret
+## Part 4: Panorama
 
 ---
 ## Environment Setup
@@ -16,14 +19,13 @@ tqdm>=4.60.0
 ---
 ## Usage
 - **To run Part 1, use the following command:** <br>
-
-
+python3 part1.py
 - **To run Part 2, use the following command:** <br>
-
+python3 part2.py
 - **To run Part 3, use the following command:** <br>
-
+python3 part3.py
 - **To run Part 4, use the following command:** <br>
-
+python3 part4.py
 
 ---
 ## Submission
