@@ -80,14 +80,29 @@ def warping(src, dst, H, ymin, ymax, xmin, xmax, direction='b'):
 
     if direction == 'b':
         # TODO: 3.apply H_inv to the destination pixels and retrieve (u,v) pixels, then reshape to (ymax-ymin),(xmax-xmin)
+        dst2src_coords = H_inv @ src_coords
+        dst2src_coords /= dst2src_coords[-1]
+        Ux, Uy = dst2src_coords[0].reshape(x_grid.shape), dst2src_coords[1].reshape(x_grid.shape)
 
         # TODO: 4.calculate the mask of the transformed coordinate (should not exceed the boundaries of source image)
+        mask = ((Ux >= 0) & (Ux < w_src-1)) & ((Uy >= 0) & (Uy < h_src-1))
 
         # TODO: 5.sample the source image with the masked and reshaped transformed coordinates
+        Ux_mask, Uy_mask = Ux[mask], Uy[mask]
+
+        # Bilinear interpolation
+        Ux_mask_floor = Ux_mask.astype(int)
+        Uy_mask_floor = Uy_mask.astype(int)
+        dx = (Ux_mask - Ux_mask_floor).reshape(-1, 1)
+        dy = (Uy_mask - Uy_mask_floor).reshape(-1, 1)
+        src_interpol = np.zeros((h_src, w_src, ch))
+        src_interpol[Uy_mask_floor, Ux_mask_floor, :] = ((1-dy) * (1-dx) * src[Uy_mask_floor, Ux_mask_floor, :]
+                                                         + (1-dy) * (dx) * src[Uy_mask_floor, Ux_mask_floor+1, :]
+                                                         + (dy) * (1-dx) * src[Uy_mask_floor+1, Ux_mask_floor, :]
+                                                         + (dy) * (dx) * src[Uy_mask_floor+1, Ux_mask_floor+1, :])
 
         # TODO: 6. assign to destination image with proper masking
-
-        pass
+        dst[ymin:ymax,xmin:xmax][mask] = src_interpol[Uy_mask_floor, Ux_mask_floor]
 
     elif direction == 'f':
         # TODO: 3.apply H to the source pixels and retrieve (u,v) pixels, then reshape to (ymax-ymin),(xmax-xmin)
