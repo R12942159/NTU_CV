@@ -19,10 +19,17 @@ def solve_homography(u, v):
         print('At least 4 points should be given')
 
     # TODO: 1.forming A
-
+    A = []
+    for (a, b), (c, d) in zip(u, v):
+        A.append([a, b, 1, 0, 0, 0, -a*c, -b*c, -c])
+        A.append([0, 0, 0, a, b, 1, -a*d, -b*d, -d])
+    A = np.array(A)
+    
     # TODO: 2.solve H with A
-
-    return H
+    _, _, Vt = np.linalg.svd(A)
+    h = Vt[-1].reshape(3, 3)
+    h = h / h[2, 2]  # let h(2,2) = 1
+    return h
 
 
 def warping(src, dst, H, ymin, ymax, xmin, xmax, direction='b'):
@@ -63,8 +70,13 @@ def warping(src, dst, H, ymin, ymax, xmin, xmax, direction='b'):
     H_inv = np.linalg.inv(H)
 
     # TODO: 1.meshgrid the (x,y) coordinate pairs
+    x_grid, y_grid = np.meshgrid(np.arange(xmin, xmax, 1), np.arange(ymin, ymax, 1), sparse = False)
 
     # TODO: 2.reshape the destination pixels as N x 3 homogeneous coordinate
+    x_flat = x_grid.flatten()
+    y_flat = y_grid.flatten()
+    ones = np.ones_like(x_flat)
+    src_coords = np.stack([x_flat, y_flat, ones], axis=0)
 
     if direction == 'b':
         # TODO: 3.apply H_inv to the destination pixels and retrieve (u,v) pixels, then reshape to (ymax-ymin),(xmax-xmin)
@@ -79,13 +91,18 @@ def warping(src, dst, H, ymin, ymax, xmin, xmax, direction='b'):
 
     elif direction == 'f':
         # TODO: 3.apply H to the source pixels and retrieve (u,v) pixels, then reshape to (ymax-ymin),(xmax-xmin)
+        src2dst_coords = H @ src_coords
+        src2dst_coords /= src2dst_coords[-1]
+        src2dst_coords = src2dst_coords.astype(int)
+        Vx, Vy = src2dst_coords[0].reshape(x_grid.shape), src2dst_coords[1].reshape(x_grid.shape)
 
         # TODO: 4.calculate the mask of the transformed coordinate (should not exceed the boundaries of destination image)
+        mask = ((Vx < w_dst) & (0 <= Vx)) & ((Vy < h_dst) & (0 <= Vy))
 
         # TODO: 5.filter the valid coordinates using previous obtained mask
+        Vx_mask, Vy_mask = Vx[mask], Vy[mask]
 
         # TODO: 6. assign to destination image using advanced array indicing
-
-        pass
+        dst[Vy_mask, Vx_mask, :] = src[mask]
 
     return dst 
