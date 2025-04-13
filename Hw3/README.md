@@ -1,13 +1,19 @@
 # HW3: Projective Geometry
 
 ## Part 1: Homography Estimation
-- **Familiar DLT estimation method**
-- **Practice forward warping**
+- **Paste warped canvas**
 
 ## Part 2: Marker-Based Planar AR
+- **Paste the function code solve_homography(u, v) warping( both forward & backward)**
+- **Briefly introduce the interpolation method I use**
 ## Part 3: Unwarp the Secret
-- **Once upon the time, you were taking a walk in BL~**
+- **Paste the 2 warped images and the link you find**
+- **Discuss the difference between 2 source images, are the warped results the same or different?**
+- **If the results are the same/diff, explain why.**
 ## Part 4: Panorama
+- **Paste my stitched panorama**
+- **Can all consecutive images be stitched into a panorama?**
+- **Explain the reason. If not, explain under what conditions will result in a failure?**
 
 ---
 ## Environment Setup
@@ -30,6 +36,6 @@
 
 ---
 ## Submission
-- Submit report.pdf & StudentID_hw2.zip (e.g. R01234567_hw2.zip) to NTU
+- Submit report.pdf & StudentID_hw2.zip (e.g. R01234567_hw3.zip) to NTU
 COOL.
 - Deadline: 2025/05/01 (Thu.) 23:59

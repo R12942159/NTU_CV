@@ -21,3 +21,10 @@
 
 - #### Part 1: Bag-of-Words Scene Recognition
 - #### Part 2: CNN Image Classification
+
+### HW3: Projective Geometry
+
+- #### Part 1: Homography Estimation
+- #### Part 2: Marker-Based Planar AR
+- #### Part 3: Unwarp the Secret
+- #### Part 4: Panorama
