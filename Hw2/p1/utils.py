@@ -6,7 +6,7 @@
 # ============================================================================
 
 import gc
-import cv2
+# import cv2
 import numpy as np
 
 from PIL import Image
@@ -54,9 +54,12 @@ def get_tiny_images(img_paths: str):
     tiny_img_feats = []
 
     for path in img_paths:
-        img = cv2.imread(path)
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        tiny_2D = cv2.resize(img, (16, 16), interpolation=cv2.INTER_AREA)
+        # img = cv2.imread(path)
+        img = Image.open(path).convert('L')
+        # img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        # tiny_2D = cv2.resize(img, (16, 16), interpolation=cv2.INTER_AREA)
+        tiny_2D = img.resize((16, 16), Image.Resampling.LANCZOS)
+        tiny_2D = np.array(tiny_2D)
         tiny_1D = tiny_2D.flatten().astype(np.float32)
 
         mean = np.mean(tiny_1D)
