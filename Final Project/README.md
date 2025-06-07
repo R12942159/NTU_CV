@@ -3,6 +3,15 @@
     請先使用 virtual environment 下載 requirements.txt 中所列出的套件。
     （給各位參考一下，我在本次 project 中使用的 python 版本為 3.13.3）
 
+### 模型參數下載
+
+   專案根目錄包含一個下載腳本 `download_models.sh`，執行該腳本會自動從 Google Drive 下載三個模型檔案到 `Final Project/models` 資料夾。
+
+   確保你的環境有安裝 `curl`，在終端機（Terminal）執行：
+
+   ```bash
+   bash download_models.sh
+
 ### 程式架構說明
 
 1. src/
