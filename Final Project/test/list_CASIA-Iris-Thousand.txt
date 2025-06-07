@@ -1,0 +1,8 @@
+dataset/CASIA-Iris-Thousand/000/L/S5000L03.jpg, dataset/CASIA-Iris-Thousand/000/L/S5000L06.jpg, 0.09638361173799816
+dataset/CASIA-Iris-Thousand/000/L/S5000L00.jpg, dataset/CASIA-Iris-Thousand/000/L/S5000L09.jpg, 0.0010840230971298258
+dataset/CASIA-Iris-Thousand/000/L/S5000L01.jpg, dataset/CASIA-Iris-Thousand/000/L/S5000L06.jpg, 0.00016527692628117105
+dataset/CASIA-Iris-Thousand/000/L/S5000L00.jpg, dataset/CASIA-Iris-Thousand/000/L/S5000L06.jpg, 0.0012076625249431267
+dataset/CASIA-Iris-Thousand/000/L/S5000L02.jpg, dataset/CASIA-Iris-Thousand/000/L/S5000L04.jpg, 0.5355598742441746
+dataset/CASIA-Iris-Thousand/000/L/S5000L03.jpg, dataset/CASIA-Iris-Thousand/000/L/S5000L09.jpg, 0.08900328365575597
+dataset/CASIA-Iris-Thousand/000/L/S5000L00.jpg, dataset/CASIA-Iris-Thousand/000/L/S5000L02.jpg, 0.18869578323601927
+dataset/CASIA-Iris-Thousand/000/L/S5000L08.jpg, dataset/CASIA-Iris-Thousand/000/L/S5000L09.jpg, 6.018598622699863e-05

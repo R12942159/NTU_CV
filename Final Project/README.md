@@ -1,60 +1,55 @@
-### 環境設置
+# Iris Recognition Pipeline
 
-    請先使用 virtual environment 下載 requirements.txt 中所列出的套件。
-    （給各位參考一下，我在本次 project 中使用的 python 版本為 3.13.3）
+This project implements an iris recognition pipeline utilizing a pre-trained deep learning model, evaluated on multiple benchmark datasets.
 
-### 模型參數下載
+---
+## Requirements  
+- Python version: 3.13.3  
+- Install dependencies: pip install -r requirements.txt
 
-   專案根目錄包含一個下載腳本 `download_models.sh`，執行該腳本會自動從 Google Drive 下載三個模型檔案到 `Final Project/models` 資料夾。
+---
+## Usage
+- **Download datasets, use the following command:** <br>
+    bash download_dataset.sh
 
-   確保你的環境有安裝 `curl`，在終端機（Terminal）執行：
+- **Download pre-trained models, use the following command:** <br>
+    bash download_models.sh
 
-   ```bash
-   bash download_models.sh
+- **Run the iris recognition pipeline, use the following command:** <br>
+    python3 ./src/run.py --input input_list/list_CASIA-Iris-Thousand.txt --output test/list_CASIA-Iris-Thousand.txt
+    python3 ./src/run.py --input input_list/list_CASIA-Iris-Lamp.txt --output test/list_CASIA-Iris-Lamp.txt
+    python3 ./src/run.py --input input_list/list_Ganzin-J7EF-Gaze.txt --output test/list_Ganzin-J7EF-Gaze.txt
 
-### 程式架構說明
+- **Evaluate the recognition results (compute d' score), use the following command:** <br>
+    python3 ./src/eval.py --input test/list_CASIA-Iris-Thousand.txt
+    python3 ./src/eval.py --input test/list_CASIA-Iris-Lamp.txt
+    python3 ./src/eval.py --input test/list_Ganzin-J7EF-Gaze.txt
 
-1. src/
+---
+## Project Structure
+1. src: 
+    Contains all source code related to this project. The main script is run.py.
+    The directory src/modules/ includes the implementations related to iris recognition, with the core functionality encapsulated in the irisRecognition class (which can be referenced alongside run.py).
 
-    src/ 內存放所有和本次 project 相關的程式碼。run.py 為主程式。
-    而 src/modules/ 內存放所有和虹膜辨識功能相關的實做，主要的 code 都在 irisRecognition 這個 class 裡面（可以和 run.py 交替著看）
+2. models:
+    Stores the pre-trained model weights required for inference.
 
-2. models/
+3. filters_pt:
+    Contains pre-trained filter parameters.
 
-    存放各個模型所需的 pre-trained weight。
+4. input_list:
+    Contains the input dataset file lists.
 
-3. filters_pt/
+5. test:
+    Stores the iris recognition results. Files named result_*.txt are the outputs submitted to Codabench.
 
-    存放 pre-trained filters。
+6. cfg.yaml:
+    Configuration file recording all necessary parameters for running the pipeline.
 
-4. input_list/
-
-    存放測資。
-
-5. test/
-
-    存放辨識結果。(裡面 result_*.txt 的檔案是上傳到 Codabench 的結果)
-
-6. cfg.yaml
-
-    此檔案中紀錄程式執行過程中所需要的參數設定。
-
-### 執行指令
-
-python3 ./src/run.py --input input_list/list_CASIA-Iris-Thousand.txt --output test/list_CASIA-Iris-Thousand.txt
-python3 ./src/run.py --input input_list/list_CASIA-Iris-Lamp.txt --output test/list_CASIA-Iris-Lamp.txt
-python3 ./src/run.py --input input_list/list_Ganzin-J7EF-Gaze.txt --output test/list_Ganzin-J7EF-Gaze.txt
-
-### 使用 eval.py 計算 d'score
-
-python3 ./src/eval.py --input test/list_CASIA-Iris-Thousand.txt
-python3 ./src/eval.py --input test/list_CASIA-Iris-Lamp.txt
-python3 ./src/eval.py --input test/list_Ganzin-J7EF-Gaze.txt
-
-### Reference
-    如果有對任何一個地方的環節不太清楚可以參考下面 github 連結。
-
-    OpenSourceIrisRecognition 首頁://github.com/CVRL/OpenSourceIrisRecognition
-    我參照的程式碼（在架構上我幾乎沒有做更動）：
-        1. https://github.com/CVRL/OpenSourceIrisRecognition/tree/main/methods/TripletNN/Python
-        2. https://github.com/CVRL/OpenSourceIrisRecognition/tree/main/methods/HDBIF/Python
+---
+## References
+For further details or clarifications on any part of this project, please refer to the following GitHub repositories:
+- OpenSourceIrisRecognition main repository: https://github.com/CVRL/OpenSourceIrisRecognition
+- Codebase referenced (minimal structural changes applied):
+    - https://github.com/CVRL/OpenSourceIrisRecognition/tree/main/methods/TripletNN/Python
+    - https://github.com/CVRL/OpenSourceIrisRecognition/tree/main/methods/HDBIF/Python
