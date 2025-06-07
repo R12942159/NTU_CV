@@ -16,14 +16,10 @@ This project implements an iris recognition pipeline utilizing a pre-trained dee
     bash download_models.sh
 
 - **Run the iris recognition pipeline, use the following command:** <br>
-    python3 ./src/run.py --input input_list/list_CASIA-Iris-Thousand.txt --output test/list_CASIA-Iris-Thousand.txt
-    python3 ./src/run.py --input input_list/list_CASIA-Iris-Lamp.txt --output test/list_CASIA-Iris-Lamp.txt
-    python3 ./src/run.py --input input_list/list_Ganzin-J7EF-Gaze.txt --output test/list_Ganzin-J7EF-Gaze.txt
+    bash main.sh
 
 - **Evaluate the recognition results (compute d' score), use the following command:** <br>
-    python3 ./src/eval.py --input test/list_CASIA-Iris-Thousand.txt
-    python3 ./src/eval.py --input test/list_CASIA-Iris-Lamp.txt
-    python3 ./src/eval.py --input test/list_Ganzin-J7EF-Gaze.txt
+    bash evaluate.sh
 
 ---
 ## Project Structure
