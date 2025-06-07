@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MODEL_DIR="Final Project/models"
+MODEL_DIR="models"
 mkdir -p "$MODEL_DIR"
 
 # Google Drive file IDs
