@@ -4,9 +4,9 @@ MODEL_DIR="models"
 mkdir -p "$MODEL_DIR"
 
 # Google Drive file IDs
-FILE1_ID="15Vvl83uV6jWcspzLRkJVdExfPRlRjF2z"
-FILE2_ID="1XYeU-v2RU028Hm1SbcUrIIxsabWw20LK"
-FILE3_ID="16bfhMTLaHzfzetUPWrYqq7VJfQykBGUd"
+FILE1_ID="1EJ9DgFw9JN1DIEk3acP_qmgJj9r_2U5X"
+FILE2_ID="1Lmt_q2EJd9_tnxeM6RSsQcRFwCr8nNz8"
+FILE3_ID="1ir8irFwt1iQWaf1tjV6XgCblk1Ss3AD-"
 
 download_file () {
     FILE_ID=$1
