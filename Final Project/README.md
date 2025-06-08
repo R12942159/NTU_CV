@@ -4,10 +4,10 @@ This project implements an iris recognition pipeline utilizing a pre-trained dee
 
 ---
 ## Contributors
-- 邱亮茗(R12942159), Graduate Institute of Communication Engineering.
-- 莊英博(R13922A24), Department of Computer Science & Information Engineering.
-- 林禹丞(R11943179), Graduate Institute of Electronics Engineering.
-- 王宥姍
+- 邱亮茗 (R12942159), Graduate Institute of Communication Engineering.
+- 莊英博 (R13922A24), Department of Computer Science & Information Engineering.
+- 林xx(Rxxxxxxxx), Graduate Institute of xxxxx Engineering.
+- 王宥姍 (B11611001), Department of Biomechatronics Engineering.
 
 ---
 ## Requirements  
