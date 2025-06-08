@@ -33,3 +33,4 @@ torchaudio==2.7.0
 torchvision==0.22.0
 triton==3.3.0
 typing_extensions==4.13.2
+gdown==5.2.0
