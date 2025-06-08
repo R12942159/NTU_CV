@@ -3,6 +3,13 @@
 This project implements an iris recognition pipeline utilizing a pre-trained deep learning model, evaluated on multiple benchmark datasets.
 
 ---
+## Contributors
+- 邱亮茗(R12942159), Graduate Institute of Communication Engineering.
+- 莊英博(R13922A24), Department of Computer Science & Information Engineering.
+- 林禹丞(R11943179), Graduate Institute of Electronics Engineering.
+- 王宥姍
+
+---
 ## Requirements  
 - Python version: 3.13.3  
 - Install dependencies: pip install -r requirements.txt
